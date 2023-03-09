@@ -17,6 +17,8 @@ db.connect(err => {
     employee_tracker();
 });
 
+
+//function for Prompt 
 function employee_tracker() {
     inquirer.prompt([{
         type: 'list',
@@ -24,7 +26,7 @@ function employee_tracker() {
         message: 'What would you like to do?',
         choices: ['View All Department', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'Log Out']
     }]).then((answers) => {
-        // Views the Department Table in the Database
+        // showing Department Table in the Database
         if (answers.prompt === 'View All Department') {
             db.query(`SELECT * FROM department`, (err, result) => {
                 if (err) throw err;
@@ -32,26 +34,31 @@ function employee_tracker() {
                 console.table(result);
                 employee_tracker();
             });
-        } else if (answers.prompt === 'View All Roles') {
+        } 
+        // showing Roles Table in the Database
+        else if (answers.prompt === 'View All Roles') {
             db.query(`SELECT * FROM role`, (err, result) => {
                 if (err) throw err;
                 console.log("Viewing All Roles: ");
                 console.table(result);
                 employee_tracker();
             });
-        } else if (answers.prompt === 'View All Employees') {
+        } 
+        // showing Employees Table in the Database
+        else if (answers.prompt === 'View All Employees') {
             db.query(`SELECT * FROM employee`, (err, result) => {
                 if (err) throw err;
                 console.log("Viewing All Employees: ");
                 console.table(result);
                 employee_tracker();
             });
-        } else if (answers.prompt === 'Add A Department') {
+        } 
+        // Adding a new Department
+        else if (answers.prompt === 'Add A Department') {
             inquirer.prompt([{
-                // Adding a Department
                 type: 'input',
                 name: 'department',
-                message: 'What is the name of the dpeartment?',
+                message: 'What is the name of the department?',
                 validate: departmentInput => {
                     if (departmentInput) {
                         return true;
@@ -67,14 +74,15 @@ function employee_tracker() {
                     employee_tracker();
                 });
             })
-        } else if (answers.prompt === 'Add A Role') {
-            // Beginning with the database so that we may acquire the departments for the choice
+        } 
+
+        // Adding A Role,Salary,Department
+        else if (answers.prompt === 'Add A Role') {
             db.query(`SELECT * FROM department`, (err, result) => {
                 if (err) throw err;
 
                 inquirer.prompt([
                     {
-                        // Adding A Role
                         type: 'input',
                         name: 'role',
                         message: 'What is the name of the role?',
@@ -88,7 +96,6 @@ function employee_tracker() {
                         }
                     },
                     {
-                        // Adding the Salary
                         type: 'input',
                         name: 'salary',
                         message: 'What is the salary of the role?',
@@ -102,7 +109,6 @@ function employee_tracker() {
                         }
                     },
                     {
-                        // Department
                         type: 'list',
                         name: 'department',
                         message: 'Which department does the role belong to?',
@@ -133,10 +139,9 @@ function employee_tracker() {
             // Calling the database to acquire the roles and managers
             db.query(`SELECT * FROM employee, role`, (err, result) => {
                 if (err) throw err;
-
+            // Adding Employee First Name,Last name,Role,Manager
                 inquirer.prompt([
                     {
-                        // Adding Employee First Name
                         type: 'input',
                         name: 'firstName',
                         message: 'What is the employees first name?',
@@ -150,7 +155,6 @@ function employee_tracker() {
                         }
                     },
                     {
-                        // Adding Employee Last Name
                         type: 'input',
                         name: 'lastName',
                         message: 'What is the employees last name?',
@@ -164,7 +168,6 @@ function employee_tracker() {
                         }
                     },
                     {
-                        // Adding Employee Role
                         type: 'list',
                         name: 'role',
                         message: 'What is the employees role?',
@@ -178,7 +181,6 @@ function employee_tracker() {
                         }
                     },
                     {
-                        // Adding Employee Manager
                         type: 'input',
                         name: 'manager',
                         message: 'Who is the employees manager?',

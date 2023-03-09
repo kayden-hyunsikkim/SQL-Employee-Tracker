@@ -33,6 +33,10 @@ The command prompt will begin on your terminal<br><br>
 
 (screenshot image could be slitely different with the web application)
 
+## Video
+
+https://drive.google.com/file/d/1BbBmZkulRwrM5OaTwZwZYpg9277hc3H6/view
+
 ## Credits
 
 N/A
